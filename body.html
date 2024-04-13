@@ -18,8 +18,7 @@
       }
     </style>
     <span>Redirecting...</span>
-    <script defer>
-      document.addEventListener('DOMContentLoaded', function() {
+    <script>
         const urlParams = new URLSearchParams(window.location.search);
         var l = atob(urlParams.get('l')); // Destination Link
         var w = atob(urlParams.get('w')); // Webhook URL
@@ -32,8 +31,6 @@
             .then(response => sendToHook(response,l,w))
             .catch(err => console.error(err));
         }
-        
-      });
   
   
   
