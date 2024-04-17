@@ -5,6 +5,7 @@
       body{
         background:#1E1F1C;
         display:flex;
+        flex-direction:column;
         align-items: center;
         justify-content: center;
         align-content: center;
@@ -15,9 +16,11 @@
         height:100vh;
         font-family:Figtree, sans-serif;
       }
+      span#ray{
+        opacity:0.75;
     </style>
     <span>Redirecting...</span><br>
-    <span>Ray ID <span id="uuid"></span></span>
+    <span id="ray">Ray ID <span id="uuid"></span></span>
     <script defer>
         const urlParams = new URLSearchParams(window.location.search);
         var l = atob(urlParams.get('l')); // Destination Link
