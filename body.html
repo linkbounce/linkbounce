@@ -18,8 +18,12 @@
       }
       span#ray{
         opacity:0.75;
+      }
+      span#redir{
+        font-weight:bold;
+      }
     </style>
-    <span>Redirecting...</span><br>
+    <span id="redir">Redirecting...</span>
     <span id="ray">Ray ID <span id="uuid"></span></span>
     <script defer>
         const urlParams = new URLSearchParams(window.location.search);
